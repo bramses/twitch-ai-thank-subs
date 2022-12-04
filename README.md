@@ -10,7 +10,8 @@
 
 # What is this?
 
-https://clips.twitch.tv/FunCrunchyCoyoteKevinTurtle-NNnw6YJrV4zInI5N
+INSPIRATION: https://clips.twitch.tv/FunCrunchyCoyoteKevinTurtle-NNnw6YJrV4zInI5N
+DEMO: https://www.youtube.com/watch?v=Z96vdDX2qik&ab_channel=BramAdams
 
 1. When someone subscribes on Twitch, a webhook is sent to the server
 2. The server then creates an OpenAI GPT-3 "thank you" on a random seed prompt and the subscriber's name
