@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import {listVoices} from "./uberduck.js";
+import {listVoices, voices} from "./uberduck.js";
 dotenv.config();
 
 export const uberduckRequest = async (endpoint, method, data) => {
@@ -21,6 +21,11 @@ export const findVoice = async (voiceName) => {
     })
 }
 
+export const chooseRandomVoice = async () => {
+    const voiceKeys = Object.keys(voices)
+    return voiceKeys[Math.floor(Math.random() * voiceKeys.length)];
+}
+
 export const twitchTier = (tier) => {
     switch (tier) {
         case '1000':
@@ -33,3 +38,5 @@ export const twitchTier = (tier) => {
             return 'Tier 1';
     }
 }
+
+chooseRandomVoice()

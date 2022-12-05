@@ -14,8 +14,7 @@ export const listVoices = async () => {
 
     return voicesJson;
 }
-// Atrioc => Aye-tree-och phonetically
-const voices = {
+export const voices = {
         'Mario': 'mario-sports-mix',
         'Eminem': 'eminem-arpa2', // (pronunciation dict)
         'Peter Griffin': 'peter-griffin', // (current)
@@ -23,12 +22,11 @@ const voices = {
         'Rick Sanchez': 'rick-sanchez'
     }
 
-const randomVoice = voices[Math.floor(Math.random() * voices.length)];
-
 export const generateWav = async (voice, text) => {
     const voiceId = voices[voice];
+    text.replaceAll('Atrioc', 'Aye-tree-och');
     logger.info('generateWav :: ', voice, text);
-    const res = await uberduckRequest('speak', 'POST', { voice: voiceId, speech: text });
+    const res = await uberduckRequest('speak', 'POST', { voice: voiceId, speech: text, pace: 1 });
 
     return { res, uuid: res.uuid };
 }
@@ -49,6 +47,5 @@ export const getWavById = async (sub, id) => {
         console.log(e);
     }
 }
-// generate(voices['Rick Sanchez'], 'Wubba lubba dub dub! Thanks for the 7 month sub, bramses! Now Atrioc can indulge in Szechuan sauce every day...for 7 months! Oh, you gotta try it. Trust me, it\'s worth every bit of that sweet, sweet schmeckle.');
-// getWavById('bramses', '6a4504cc-7738-4dab-b498-1317a637d872')
+
 

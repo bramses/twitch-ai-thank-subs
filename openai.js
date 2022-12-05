@@ -46,6 +46,9 @@ const seed_prompts = [
 ]
 
 export const generateText = async (voice, subName, subTier, isGifted) => {
+    if (typeof isGifted === 'string') {
+        isGifted = JSON.parse(isGifted);
+    }
     const prompt = seed_prompts.find(p => p.voice === voice).prompts[0](subName, twitchTier(subTier), isGifted ? 'gifted' : '');
     const response = await openai.createCompletion({
         model: "text-davinci-003",

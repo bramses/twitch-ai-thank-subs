@@ -1,7 +1,7 @@
 import { default as player } from 'node-wav-player';
 
-export function playWav(sub, id) {
-    player.play({
+export async function playWav(sub, id) {
+    await player.play({
         path: `./wavs/${sub}-${id}.wav`,
         sync: true
     }).then(() => {
