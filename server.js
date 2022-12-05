@@ -1,5 +1,8 @@
 import express from 'express';
 import {subQueue} from "./bull/queue.js";
+import log from "simple-node-logger";
+
+const logger = log.createSimpleLogger('logs/queue.log');
 
 const app = express();
 
@@ -10,7 +13,8 @@ app.get('/', (req, res) => {
 // take in a sub name, sub tier, and isGifted and add to bull queue
 app.get('/sub', (req, res) => {
     const {subName, subTier, isGifted} = req.query;
-    console.log('sub :: ', subName, subTier, isGifted);
+
+    logger.info('adding sub to queue :: ', subName, subTier, isGifted);
     subQueue.add({
         subName,
         subTier,

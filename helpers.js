@@ -1,17 +1,25 @@
 import dotenv from 'dotenv';
 import {listVoices, voices} from "./uberduck.js";
+import log from 'simple-node-logger';
+
 dotenv.config();
+const logger = log.createSimpleLogger('logs/helpers.log');
 
 export const uberduckRequest = async (endpoint, method, data) => {
-    console.log('uberduckRequest :: ', endpoint, method, data);
-    let response = await fetch(`https://api.uberduck.ai/${endpoint}`, {
-        method,
-        headers: {'Authorization': 'Basic ' + btoa(`${process.env.UBERDUCK_API_KEY}:${process.env.UBERDUCK_API_SECRET}`)},
-        body: JSON.stringify(data)
-    });
-    let res = await response.json();
+    try {
+        logger.info('uberduckRequest :: endpoint: ', endpoint, " method: ", method, ' data: ', data);
+        let response = await fetch(`https://api.uberduck.ai/${endpoint}`, {
+            method,
+            headers: {'Authorization': 'Basic ' + btoa(`${process.env.UBERDUCK_API_KEY}:${process.env.UBERDUCK_API_SECRET}`)},
+            body: JSON.stringify(data)
+        });
+        let res = await response.json();
 
-    return res;
+        return res;
+    } catch (e) {
+        console.log('error in uberduckRequest: ');
+        logger.error(e);
+    }
 }
 
 export const findVoice = async (voiceName) => {

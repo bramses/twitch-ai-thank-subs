@@ -5,7 +5,6 @@ import {generateWav, getWavById} from "../uberduck.js";
 import {playWav} from "../wav-player.js";
 import log from "simple-node-logger";
 
-
 const logger = log.createSimpleLogger('logs/queue.log');
 const WAV_TIMEOUT = 10000;
 const SUB_TEST_NAME = 'bramses';
@@ -34,7 +33,8 @@ const createSubAlert = async (subName = '', subTier = '', isGifted = false) => {
         }, 1000);
     }
 
-    return delay(WAV_TIMEOUT, uuid).then(async (uuid) => {
+    let wavURL = '';
+    await delay(WAV_TIMEOUT, uuid).then(async (uuid) => {
         logger.info('main :: getWavById :: ', subName, uuid);
         await getWavById(subName, uuid);
         if (SHOW_DEBUG_TIMER) { // wait 10 seconds for the wav to be downloaded
@@ -48,35 +48,38 @@ const createSubAlert = async (subName = '', subTier = '', isGifted = false) => {
                 }
             }, 1000);
         }
-        return delay(WAV_TIMEOUT, uuid).then((uuid) => {
+        await delay(WAV_TIMEOUT, uuid).then((uuid) => {
             logger.info('main :: playWav :: ', subName, uuid);
             playWav(subName, uuid);
             console.log(text)
         });
     });
+
+    return { text, wavURL };
 }
 
 export const subQueue = new Bull('sub-queue', {
     limiter: {
-        max: 1000,
-        duration: 30000
+        max: 1,
+        duration: 60000
     }
 });
 
-// const job = await subQueue.add({
-//     subName: 'bramses',
-//     subTier: '1000',
-//     isGifted: false
-// });
 
-subQueue.process( async (job) => {
+subQueue.process( async (job, done) => {
     const {subName, subTier, isGifted} = job.data;
     console.log('Processing job', job.id);
     const res = await createSubAlert(subName, subTier, isGifted);
     console.log('res', res);
-    return res;
+
+    done(null, res);
+    // return res;
 });
 
 subQueue.on('completed', (job, result) => {
-    console.log(`Job completed with result ${result}`);
+    logger.info(`Job completed with result ${JSON.stringify(result)}`);
+})
+
+subQueue.on('failed', (job, err) => {
+    logger.error(`Job failed with error ${err.message}`);
 })
