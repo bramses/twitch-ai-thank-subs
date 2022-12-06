@@ -1,14 +1,19 @@
 import express from 'express';
 import {subQueue} from "./bull/queue.js";
 import log from "simple-node-logger";
+import * as path from "path";
 
 const logger = log.createSimpleLogger('logs/queue.log');
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
+app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "..", "build")));
+
+
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, "public", "index.html"));
+// })
 
 // take in a sub name, sub tier, and isGifted and add to bull queue
 app.get('/sub', (req, res) => {

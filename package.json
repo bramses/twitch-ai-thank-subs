@@ -5,20 +5,39 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-client": "react-scripts start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@socket-studio/preact": "^1.0.0-canary.17",
     "body-parser": "^1.20.1",
     "bull": "^4.10.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node-wav-player": "^0.2.0",
     "openai": "^3.1.0",
+    "preact": "^10.11.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-scripts": "^5.0.1",
     "simple-node-logger": "^21.8.12",
     "tmi.js": "^1.8.5",
     "uberduck-api": "^1.2.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
