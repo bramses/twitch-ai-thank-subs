@@ -2,18 +2,18 @@ import express from 'express';
 import {subQueue} from "./bull/queue.js";
 import log from "simple-node-logger";
 import * as path from "path";
+import {fileURLToPath} from 'url';
 
 const logger = log.createSimpleLogger('logs/queue.log');
 
 const app = express();
 
-app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, "..", "build")));
 
 
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, "public", "index.html"));
-// })
+
+app.get('/', (req, res) => {
+    res.send('Backend')
+})
 
 // take in a sub name, sub tier, and isGifted and add to bull queue
 app.get('/sub', (req, res) => {
@@ -28,6 +28,6 @@ app.get('/sub', (req, res) => {
     res.send('sub');
 })
 
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
+app.listen(5000, () => {
+    console.log('Example app listening on port 5000!');
 })

@@ -1,0 +1,24 @@
+.text {
+    font-size: clamp(1rem, 2vw, 2rem);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+    /* center the content */
+    place-items: center;
+   /* for multi-line flex container */
+}
+.textWrapper {
+    /* add padding to the text */
+    padding: 1rem;
+    /* center the text */
+    text-align: center;
+}
+
+.subName {
+    color: #0070f3;
+}

@@ -51,6 +51,18 @@ const createSubAlert = async (subName = '', subTier = '', isGifted = false) => {
         await delay(WAV_TIMEOUT, uuid).then((uuid) => {
             logger.info('main :: playWav :: ', subName, uuid);
             playWav(subName, uuid);
+            const options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: `{"subName":"${subName}","text":"${text}","voice":"${voice}"}`
+            };
+
+            console.log(options)
+
+            fetch('http://localhost:3000/api/overlay', options)
+                .then(response => response.json())
+                .then(response => console.log(response))
+                .catch(err => console.error(err));
             console.log(text)
         });
     });
